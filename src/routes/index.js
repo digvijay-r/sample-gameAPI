@@ -2,6 +2,7 @@ const express = require('express');
 const jwt = require('jsonwebtoken');
 const Player = require('../models/player');
 const systemConfig = require('../configs/systemConfig.json');
+const authentication = require('../middlewares/auth.js');
 const router = new express.Router();
 
 router.get('/', (req, res) => {
@@ -25,6 +26,11 @@ router.post('/register', async (req, res) => {
         console.error(error);
         res.status(400).send(error);
     }
+});
+
+router.get('/me', authentication, async (req, res) => {
+    console.log(req.player);
+    res.send(req.player);
 })
 
 module.exports = router;
