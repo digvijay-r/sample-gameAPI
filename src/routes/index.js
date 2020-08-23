@@ -57,11 +57,11 @@ router.post('/game/claim_bonus', authentication, async (req, res) => {
         console.log("expired time ", req.player.bonusInfo.claimedTime);
         const difference = currentTime - Number(req.player.bonusInfo.claimedTime);
         console.log("difference in claimed and current", difference);
+        if (req.player.bonusInfo.claimedAmt >= systemConfig.maxBonusClaim) {
+            return res.status(400).send({ info: "You have claimed max amount." })
+        }
         if (difference < systemConfig.bonusClaimDifference) {
             return res.status(400).send({ info: "You can claim after 1 min of last claim." })
-        }
-        if (req.player.bonusInfo.claimedAmt > systemConfig.maxBonusClaim) {
-            return res.status(400).send({ info: "You have claimed max amount." })
         }
         req.player.points += systemConfig.bonusPoints;
         req.player.bonusInfo.claimedTime = Date.now();
