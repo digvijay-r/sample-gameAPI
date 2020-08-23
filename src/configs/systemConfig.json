@@ -6,5 +6,8 @@
     },
     "serverPort" : 3000,
     "jwtSecretKey" : "DigvijaySinghBackendDev",
-    "gamePlayMaxCount" : 5
+    "gamePlayMaxCount" : 5,
+    "bonusPoints" : 10,
+    "bonusClaimDifference" : "60000",
+    "maxBonusClaim" : 100
 }

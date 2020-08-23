@@ -14,6 +14,16 @@ const playerSchema = new mongoose.Schema({
     gamePlayRecord: {
         expiredTime: Date,
         gamePlayCounter: Number
+    },
+    bonusInfo: {
+        claimedTime: {
+            type: Date,
+            default: Date.now
+        },
+        claimedAmt: {
+            type: Number,
+            default: 0
+        }
     }
 }, {
     timestamps: true

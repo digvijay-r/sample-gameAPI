@@ -11,6 +11,7 @@ const rateLimiter = async (req, res, next) => {
     try {
         console.log("current time ", Number(currentTime));
         console.log("expired time ", req.player.gamePlayRecord.expiredTime);
+        console.log("condition ", (req.player.gamePlayRecord.expiredTime > Number(currentTime)));
         if (!!req.player.gamePlayRecord && (req.player.gamePlayRecord.expiredTime > Number(currentTime))) {
             // in current phase check counter
             console.log('in if condition');

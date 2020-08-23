@@ -46,7 +46,31 @@ router.post('/game/play', authentication, rateLimiter, async (req, res) => {
         res.status(201).send({ points_added, points_total: req.player.points });
     } catch (error) {
         console.error(error);
-        res.status(500).send();
+        res.status(500).send(error);
+    }
+});
+
+router.post('/game/claim_bonus', authentication, async (req, res) => {
+    try {
+        const currentTime = Number(new Date());
+        console.log("current time ", currentTime);
+        console.log("expired time ", req.player.bonusInfo.claimedTime);
+        const difference = currentTime - Number(req.player.bonusInfo.claimedTime);
+        console.log("difference in claimed and current", difference);
+        if (difference < systemConfig.bonusClaimDifference) {
+            return res.status(400).send({ info: "You can claim after 1 min of last claim." })
+        }
+        if (req.player.bonusInfo.claimedAmt > systemConfig.maxBonusClaim) {
+            return res.status(400).send({ info: "You have claimed max amount." })
+        }
+        req.player.points += systemConfig.bonusPoints;
+        req.player.bonusInfo.claimedTime = Date.now();
+        req.player.bonusInfo.claimedAmt += systemConfig.bonusPoints;
+        await req.player.save();
+        res.status(201).send({ points_added: systemConfig.bonusPoints, points_total: req.player.points });
+    } catch (error) {
+        console.log(error)
+        res.status(500).send(error);
     }
 });
 
