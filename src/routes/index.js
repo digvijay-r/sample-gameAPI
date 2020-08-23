@@ -87,6 +87,7 @@ router.get('/leaderboard', async (req, res, next) => {
         }
         console.log(req.header('Authorization'));
         if (req.header('Authorization')) {
+            req.leaders = leaders;
             next();
             return;
         }
@@ -94,6 +95,15 @@ router.get('/leaderboard', async (req, res, next) => {
     } catch (error) {
         console.log(error);
         res.status(500).send(error);
+    }
+}, authentication, async (req, res) => {
+    console.log("here");
+    try {
+        const current_user_place = await Player.find({ points: { $gt: req.player.points } }).countDocuments() + 1;
+        res.status(200).send({ current_user_place, leaders: req.leaders })
+    } catch (error) {
+
+        res.status(500).send();
     }
 });
 
