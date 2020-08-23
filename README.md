@@ -38,7 +38,7 @@ Project requires [Node.js](https://nodejs.org/) and [MongoDb](https://www.mongod
 
 ## API Information
 
-* Get Server Time
+### Get Server Time
 
 URL: /now
 
@@ -50,7 +50,7 @@ Response: timestamp:number (current server time)
 
 Description: using this method user is able to get current server time
 
-* Register Player
+### Register Player
 
 URL: /register
 
@@ -66,7 +66,7 @@ Description: using this method user can be registered in the system provided
 name (name should be unique) and get authorisation token. This token will be used to
 access API endpoints which require authorisation
 
-* Get Own Profile
+### Get Own Profile
 
 URL: /me 
 
@@ -80,7 +80,7 @@ Response: – name: string
 Description: using this method user can get
 information about himself (name and amount of points)
 
-* Play Game
+### Play Game
 
 URL: /game/play 
 
@@ -97,7 +97,7 @@ times. For example: First request at 11:05 – OK Second request at 11:06 – OK
 at 11:20 – OK Forth request at 11:40 – OK Fifth request at 11:41 – OK All following requests
 until 12:00 – ERROR Sixth request at 12:00 – OK and so on...
 
-* Claim Bonus API
+### Claim Bonus API
 
 URL /game/claim_bonus 
 
@@ -111,7 +111,7 @@ number (total amount of points of the current user)
 Description: for every minute after date of registration or date of the last bonus claim user has ability to get 10 extra points.
 Maximum amount of points which user can get for 1 claim request is limited by 100.
 
-* Get Leaderbaord
+### Get Leaderbaord
 
 URL /leaderboard 
 
