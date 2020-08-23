@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const playerSchema = new mongoose.Schema({
     name: {
-        type : String,
+        type: String,
         unique: true,
         required: true,
         trim: true
@@ -10,7 +10,13 @@ const playerSchema = new mongoose.Schema({
     points: {
         type: Number,
         default: 0
+    },
+    gamePlayRecord: {
+        expiredTime: Date,
+        gamePlayCounter: Number
     }
+}, {
+    timestamps: true
 });
 
 const Player = mongoose.model('Player', playerSchema);
