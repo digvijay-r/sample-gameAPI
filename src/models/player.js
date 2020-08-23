@@ -29,6 +29,8 @@ const playerSchema = new mongoose.Schema({
     timestamps: true
 });
 
+playerSchema.index({ points: -1 });
+
 const Player = mongoose.model('Player', playerSchema);
 
 module.exports = Player;

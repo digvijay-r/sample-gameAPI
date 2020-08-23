@@ -74,4 +74,27 @@ router.post('/game/claim_bonus', authentication, async (req, res) => {
     }
 });
 
+router.get('/leaderboard', async (req, res, next) => {
+    try {
+        console.log("here ")
+        const leaderboard = await Player.find({}, { "name": 1, "points": 1 }).sort({ "points": -1 }).limit(10);
+        let i = 0;
+        var leaders = [];
+        for (let i = 0; i < leaderboard.length; i++) {
+            const elem = leaderboard[i].toObject();
+            elem.rank = i + 1;
+            leaders.push(elem);
+        }
+        console.log(req.header('Authorization'));
+        if (req.header('Authorization')) {
+            next();
+            return;
+        }
+        res.status(200).send({ leaders })
+    } catch (error) {
+        console.log(error);
+        res.status(500).send(error);
+    }
+});
+
 module.exports = router;
