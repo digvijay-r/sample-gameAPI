@@ -14,7 +14,7 @@ const rateLimiter = async (req, res, next) => {
         console.log("condition ", (req.player.gamePlayRecord.expiredTime > Number(currentTime)));
         if (!!req.player.gamePlayRecord && (req.player.gamePlayRecord.expiredTime > Number(currentTime))) {
             // in current phase check counter
-            console.log('in if condition');
+            console.log('in if condition', req.player.gamePlayRecord.gamePlayCounter);
             if (req.player.gamePlayRecord.gamePlayCounter < 1) {
                 throw new Error();
             }
@@ -26,7 +26,7 @@ const rateLimiter = async (req, res, next) => {
         // insert new doc and call next
         req.player.gamePlayRecord = {
             expiredTime: generateExpriedTime(currentTime),
-            gamePlayCounter: systemConfig.gamePlayMaxCount
+            gamePlayCounter: systemConfig.gamePlayMaxCount - 1
         }
         // await req.player.save();
         next();
